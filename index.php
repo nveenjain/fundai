@@ -1,3 +1,11 @@
+<?php
+session_start();
+?>
+<?php
+if(isset($_SESSION['name'])){
+    header("Location:submit.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,18 +30,18 @@
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-md-offset-3">
                         <div class="well">
-                            <form id="loginForm" method="POST" action="index.php" novalidate="novalidate">
+                            <form id="loginForm" method="POST" action="function.php" novalidate="novalidate">
                                 <div class="form-group " >
                                     <label for="username" class="control-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" value="" required="" title="Please enter you username" placeholder="example@gmail.com">
+                                    <input type="text"  class="form-control" id="username" name="username" value="" required="required" title="Please enter you username" placeholder="YYAA00****">
                                     <span class="help-block"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="control-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password">
+                                    <input type="password" class="form-control" id="password" name="password" value="" required="required" title="Please enter your password">
                                     <span class="help-block"></span>
                                 </div>
-                                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
+                                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
                                 <button type="submit" class="btn btn-primary ">Login</button>
                             </form>
                         </div>
@@ -42,5 +50,33 @@
             </div>
         </div>
     </div>
+    <script>
+        document.querySelector('#loginForm').addEventListener('submit',function(e){
+            e.preventDefault();
+            document.querySelector("#loginForm>button").classList.add("disabled");
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if (this.readyState==4 && this.status==200) {
+                        var msg = document.querySelector('#loginErrorMsg');
+                    if (this.responseText=="Success") {
+                        msg.classList.remove('hide');
+                        msg.style.color = "green";
+                        msg.innerHTML = this.responseText+", Redirecting to Submit Page";
+                        window.location = "./submit.php";
+                    }else{
+                        msg.classList.remove('hide');
+                        msg.style.color = "red";
+                        msg.innerHTML = this.responseText;
+                        document.querySelector("#loginForm>button").classList.remove("disabled");
+
+                    }
+                }
+            };
+            
+            xmlhttp.open("POST","function.php",true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("username="+document.querySelector("#username").value+"&password="+document.querySelector("#password").value);
+        });
+    </script>
 </body>
 </html>
