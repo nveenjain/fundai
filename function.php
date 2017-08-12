@@ -26,6 +26,15 @@ session_start();
 			echo "Please Enter Valid Username/Password";
 		}
 	}
+	function Submit($company,$process,$tag,$desc,$year,$anonymous)
+	{
+		if(isset($_SESSION['name'])){
+			$username = $_SESSION['name'];
+			include('db.php');
+			$dsn = "mysql:host=$host;dbname=$db;charset=$charset";		
+			$pdo = new pdo($dsn,$user,$pass);
+		}
+	}
 	if(isset($_POST['username']) && isset($_POST['password'])){
 		include('db.php');
 		$dsn = "mysql:host=$host;dbname=$db;charset=$charset";		
