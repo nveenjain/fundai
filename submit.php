@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php
+session_start();
+if(!isset($_SESSION['name'])){
+  header("Location:index.php");
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,11 +55,11 @@
         <ul class="nav navbar-nav navbar-right navtabbar ">
           <li >
             <a  href="#" class="btn btn-info ">
-              <strong>Student Name</strong>
+              <strong><?php echo $_SESSION['name']; ?></strong>
             </a>
           </li>
           <li >
-            <a href="" class="btn btn-danger navbar-right">
+            <a href="logout.php" class="btn btn-danger navbar-right">
               <strong>Log out</strong>
             </a>
           </li>
@@ -83,7 +88,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form method="post" action="submit.php" id="new_submition">
+            <form method="post" action="submit.php" id="new_submission" onsubmit="submit();">
               <div class="form-group">
                 <label for="company" class="form-control-label">company:</label>
                 <input type="text" class="form-control" id="company"/>
@@ -113,11 +118,11 @@
               </div>
               <div class="form-group">
                 <label for="year" class="form-control-label">Year</label>
-                <input type="date" class="form-control" id="year">
+                <input type="number" min="1926" max="2018" class="form-control" id="year">
               </div>
               <div>
-                <label for="anonyms">Anonyms</label>
-                <input type="checkbox" id="anonyms" name="anonyms" value="anonyms">
+                <label for="anonymous">Anonymous</label>
+                <input type="checkbox" id="anonymous" name="anonymous" value="anonymous">
               </div>
               <div class="modal-footer">
                 <button type="submit" id="modal" class="btn btn-primary">Sumbit Response</button>
@@ -165,19 +170,8 @@
               <th>Process Type</th>
               <th>Tag</th>
               <th>Year</th>
-              <th>Action</th>
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-              <th>Serial No.</th>
-              <th>Company</th>
-              <th>Process Type</th>
-              <th>Tag</th>
-              <th>Year</th>
-              <th>Action</th>
-            </tr>
-          </tfoot>
           <tbody id="tbodydata">
           </tbody>
         </table>
@@ -189,8 +183,8 @@
   </div>
   <!-- Data table ends here here-->
     <script>
-
     //open the modal
+  
   $(document).ready(function(){
     $("#myButton").click(function(){
         $("#exampleModal").modal("show");
@@ -205,7 +199,8 @@
   //show response modal
   $(document).ready(function(){
     $("#tbodydata").click(function(){
-        $("#showresponse").modal("show");
+        // $("#showresponse").modal("show");
+        console.log(this);
     });
   });
   //hide response modala
@@ -218,7 +213,7 @@
   $(document).ready(function (){
         var table = $('#data_table').DataTable({
             dom: 'frt',
-            ajax: '',
+            ajax: 'http://localhost/fundai/fundai/news.php',
             drawCallback: function(){
                 if($('#btn-example-load-more').is(':visible')){
                     $('html, body').animate({
