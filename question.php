@@ -1,4 +1,45 @@
-<!DOCTYPE html>
+<?php
+session_start();
+if(isset($_SESSION['name']) && isset($_GET['gid'])){
+    header("Content-type:application/json");
+    require('db.php');
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
+    $pdo = new pdo($dsn,$user,$pass);
+    $q = $pdo->prepare("SELECT id,question,answer FROM question WHERE group_id=:gid");
+        $q->bindParam(':gid',$_GET['gid']);
+        $q->execute();
+        $json_data = Array();
+        $json_data["data"]= Array();
+        $count=1;
+        while($data = $q->fetch()){
+            $nr = Array();
+            array_push($nr, $count,$data["question"],$data["answer"]);
+            array_push($json_data["data"], $nr);
+            $count++;
+        }
+    echo json_encode($json_data);
+
+    die();
+}else if(isset($_SESSION['name']) && isset($_POST['qid']) && $_POST['g']){
+        header("Content-type:application/json");
+        require('db.php');
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
+        $pdo = new pdo($dsn,$user,$pass);
+        $q = $pdo->prepare("SELECT question,answer,user,anonymous FROM question WHERE group_id=:gid LIMIT 1 OFFSET :offset");
+        $q->bindParam(':gid',$_POST['g']);
+        $q->bindParam(':offset',intval($_POST['qid']-1), PDO::PARAM_INT);
+        $q->execute();
+        $data = $q->fetch();
+        if($data[3]==1)$data[2] = "Anonymous";
+        $json_data = Array($data[0],$data[1],$data[2]);
+        echo json_encode($json_data,  JSON_FORCE_OBJECT);
+    die();
+}else if(!(isset($_SESSION['name']) && isset($_GET['id']))){
+  header("Location:index.php");
+}else{
+    
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -61,11 +102,11 @@
             <ul class="nav navbar-nav navbar-right navtabbar ">
                 <li >
                     <a  href="#" class="btn btn-info ">
-                        <strong>Student Name</strong>
+                        <strong><?php echo $_SESSION['name']; ?></strong>
                     </a>
                 </li>
                 <li >
-                    <a href="" class="btn btn-danger navbar-right">
+                    <a href="./logout.php" class="btn btn-danger navbar-right">
                         <strong>Log out</strong>
                     </a>
                 </li>
@@ -122,8 +163,9 @@
                     <div class="modal-body ">
                         <div class="card text-center ">
                             <div class="card-block alignleft">
-                                <h4 class="card-title" id="modal_question">Question goes here</h4>
-                                <p class="card-text" id="modal_answer">Answer goes here</p>
+                                <h4 class="card-title" id="modal_question">Loading...</h4>
+                                <blockquote class="blockquote" id="modal_answer">Loading</blockquote>
+                                <p class="card-text" id="modal_submitted">Loading...</p>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -142,8 +184,21 @@
         <div class="row">
             <div class="span6 aligncenter flyLeft">
                 <blockquote class="large">
-                    Group Name
+                    <?php
+                    include('db.php');
+                    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
+                    $pdo = new pdo($dsn,$user,$pass);
+                    $q= $pdo->prepare("SELECT * FROM `group` WHERE id=?");
+                    $id = $_GET['id'];
+                    $q->execute([$id]);
+                    $data = $q->fetch();
+                    // var_dump($data);
+                    echo $data["company"]. "<br />";
+                    ?>
                 </blockquote>
+                    <?php
+                    echo $data["process_type"].", ".$data["year"];
+                    ?>
             </div>
             <div class="span6 aligncenter flyRight">
                 <i class="icon-coffee icon-10x"></i>
@@ -161,30 +216,15 @@
         </div>
         <table class="table table-striped table-bordered table-hover "  id="data_table">
             <thead>
-            <tr>
+            <tr class="concat">
                 <th class="col-xs-1">Question No.</th>
-                <th class="col-xs-11">Question</th>
+                <th class="col-xs-6">Question</th>
+                <th class="col-xs-5">Answer</th>
             </tr>
             </thead>
-            <tfoot>
-            <tr>
-                <th class="col-xs-1">Question No.</th>
-                <td class="col-xs-11">Question</td>
-            </tr>
-            </tfoot>
+            
             <tbody id="table_question">
-            <tr>
-                <td >1</td>
-                <td class="setWidth concat">Question</td>
-            </tr>
-            <tr>
-                <td >1</td>
-                <td class="setWidth concat">Question</td>
-            </tr>
-            <tr>
-                <td >1</td>
-                <td class="setWidth concat"><div>QuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestionQuestion</div></td>
-            </tr>
+            
             </tbody>
         </table>
         <div class="dt-more-container">
@@ -258,7 +298,7 @@
     $(document).ready(function (){
         var table = $('#data_table').DataTable({
             dom: 'frt',
-            ajax: '',
+            ajax: '?gid='+<?php echo $id ?>,
             drawCallback: function(){
                 if($('#btn-example-load-more').is(':visible')){
                     $('html, body').animate({
@@ -269,8 +309,25 @@
                 $('#btn-example-load-more').toggle(this.api().page.hasMore());
             }
         });
-        //load more data button
+        $('.dataTable').on('click', 'tbody tr', function() {
+        var xtp = new XMLHttpRequest();
+          xtp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            var x = JSON.parse(this.responseText);
+            console.log(x);
+            document.querySelector('#modal_question').innerHTML = x[0];
+            document.querySelector('#modal_answer').innerHTML = x[1];
+            document.querySelector('#modal_submitted').innerHTML = "by:- "+ x[2];
 
+            }
+        };
+        var v = table.row(this).data()[0];
+        var g = <?php echo $_GET['id']; ?>;
+        xtp.open("POST", "question.php", true);
+        xtp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xtp.send(`qid=${v}&g=${g}`);
+});
+        //load more data button
         $('#btn-example-load-more').on('click', function(){
             table.page.loadMore();
         });
