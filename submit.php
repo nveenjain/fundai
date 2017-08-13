@@ -31,6 +31,9 @@ if(!isset($_SESSION['name'])){
             text-align:center;
             margin:2em 0;
         }
+        .dataTable tbody tr {
+          cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -135,27 +138,7 @@ if(!isset($_SESSION['name'])){
   </div>
   <!--modal for submition history start here -->
 
-  <div class="container">
-    <div class="modal fade" id="showresponse" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="showModalLabel">New submission</h5>
-            <button type="button" class="close" data-dismiss="showData" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form  action="" id="newsubmition">
-              <div class="modal-footer">
-                <button type="submit" id="showData" class="btn btn-primary">Close</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
   <!--Data table start here -->
   <div class="container foot">
     <div class="panel panel-default panel-danger">
@@ -197,12 +180,7 @@ if(!isset($_SESSION['name'])){
     });
   });
   //show response modal
-  $(document).ready(function(){
-    $("#tbodydata").click(function(){
-        // $("#showresponse").modal("show");
-        console.log(this);
-    });
-  });
+  
   //hide response modala
   $(document).ready(function(){
     $("#showData").click(function(){
@@ -224,6 +202,10 @@ if(!isset($_SESSION['name'])){
                 $('#btn-example-load-more').toggle(this.api().page.hasMore());
             }
         });
+        $('.dataTable').on('click', 'tbody tr', function() {
+          document.location = ("./question.php?id="+parseInt(this.textContent));
+
+});
         //load more data button
 
         $('#btn-example-load-more').on('click', function(){
