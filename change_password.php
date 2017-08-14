@@ -1,4 +1,38 @@
-<!DOCTYPE html>
+<?php
+    session_start();
+    if(isset($_SESSION['name'])){
+        if(isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['con_new_password']) && strlen($_POST['new_password'])>=8){
+            if($_POST['con_new_password']===$_POST['new_password']){
+                require('db.php');
+                $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
+                $pdo = new pdo($dsn,$user,$pass);
+                $q = $pdo->prepare("SELECT username,password,salt FROM `users` WHERE username=:uid");
+                $q->bindParam(":uid",$_SESSION['name']);
+                $q->execute();
+                if($q->rowCount()){
+                    $data = $q->fetch();
+                    
+                     if($data[1]===md5(sha1($data[2].$_POST["old_password"]."y"))){
+                        $new = md5(sha1($data[2].$_POST["new_password"]."y"));
+                        $nq = $pdo->prepare("UPDATE `users` SET `password`=? WHERE `username`=?");
+                        $nq->bindParam(1,$new);
+                        $nq->bindParam(2,$_SESSION['name']);
+                        $nq->execute();
+                        if($nq->rowCount()){
+                            $error = "<h3 style='color:green'>Successfully Changed the Password</h3>";
+                        }else{
+                            $error = "<h3>Some error occurred</h3>";
+                            
+                        }
+                     }
+                }
+            }else{
+                $error="<h3>Password you entered did not match</h3>";
+            }
+        }else{$error = "<h3 style='color:red'>Please Enter all the fields and the new password must be greated than 8 characters</h3>";}
+    }else header("Location:index.php");
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +71,7 @@
         <div class="collapse navbar-collapse" id="navtab">
             <ul class="nav navbar-nav navbar-left">
                 <li >
-                    <a class="btn btn-info" id="goto_submit"  data-whatever="@mdo">
+                    <a class="btn btn-info" id="goto_submit" href="submit.php" data-whatever="@mdo">
                         <strong>Go To Submit Page</strong>
                     </a>
                 </li>
@@ -45,7 +79,7 @@
             <ul class="nav navbar-nav navbar-right navtabbar ">
                 <li >
                     <a  href="#" class="btn btn-info ">
-                        <strong>Students name</strong>
+                        <strong><?php echo $_SESSION['name']; ?></strong>
                     </a>
                 </li>
                 <li >
@@ -69,7 +103,7 @@
                         <form id="loginForm" method="POST" action="" novalidate="novalidate">
                             <div class="form-group " >
                                 <label for="old_password" class="control-label">Old Password</label>
-                                <input type="password"  class="form-control" id="old_password" name="old_password" value="" required="required" title="Please enter you Old Password" placeholder="YYAA00****">
+                                <input type="password"  class="form-control" id="old_password" name="old_password" value="" required="required" title="Please enter you Old Password">
                                 <span class="help-block"></span>
                             </div>
                             <div class="form-group">
@@ -82,7 +116,7 @@
                                 <input type="password" class="form-control" id="con_new_password" name="con_new_password" value="" required="required" title="Please confirm your New Password">
                                 <span class="help-block"></span>
                             </div>
-                            <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+                            <div id="loginErrorMsg" class="alert alert-error"><?php echo $error; ?></div>
                             <button type="submit" class="btn btn-primary ">Change Password</button>
                         </form>
                     </div>

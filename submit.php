@@ -79,7 +79,7 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
         </ul>
         <ul class="nav navbar-nav navbar-right navtabbar ">
           <li >
-            <a  href="./change_password.php" class="btn btn-info ">
+            <a  href="#" class="btn btn-info ">
               <strong><?php echo $_SESSION['name']; ?></strong>
             </a>
           </li>
@@ -142,6 +142,11 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
                 <label for="year" class="form-control-label">Year</label>
                 <input required="required" autocomplete="off" type="number" min="1926" max="2018" class="form-control" id="year">
               </div>
+              <div class="card text-white bg-danger mb-3" id="msg" style="max-width: 100%;">
+                <div class="card-body">
+                  <p class="card-text"></p>
+                 </div>
+             </div>
             <button type="submit" class="btn btn-info" id="submit_response_btn">Submit Response</button>
             </form>
             <div class="modal-footer">
@@ -215,14 +220,22 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
     //open the modal
   document.querySelector("#new_submission").addEventListener('submit', function(e){
     e.preventDefault();
+    document.querySelector('#submit_response_btn').classList.add("disabled");
     var xtp = new XMLHttpRequest();
     xtp.onreadystatechange = function(){
       if(this.readyState==4 && this.status==200) {
         console.log(this.responseText);
         if(this.responseText==="Success"){
-
+          document.querySelector('#submit_response_btn').classList.remove("disabled");
+          document.querySelector("#msg").classList.remove("bg-danger");
+          document.querySelector("#msg").innerHTML="Success";
+          window.location= "./";
+          document.querySelectorAll('input').forEach( function(element) {
+            element.value = null;
+          });
         }else{
-          
+          document.querySelector('#submit_response_btn').classList.remove("disabled");
+          document.querySelector("#msg").innerHTML=this.responseText;
         }
       }
     };

@@ -47,7 +47,8 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         $q->bindParam(':question',$_POST['question']);
         $q->bindParam(':answer',$_POST['answer']);
         $q->bindParam(':user',$_SESSION['name']);
-        $q->bindParam(':anonymous',boolval($_POST['anonymous']),PDO::PARAM_BOOL);
+        $an =  $_POST['anonymous']=="false"?0:1;
+        $q->bindParam(':anonymous',boolval($an),PDO::PARAM_BOOL);
         $q->execute();
         if ($q->rowCount()){
             echo "Success";
@@ -375,14 +376,17 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
     }
     document.querySelector('#new_question').addEventListener('submit', function(e){
         e.preventDefault();
+        document.querySelector('#submit_question-btn').classList.add("disabled");
         var xtp = new XMLHttpRequest();
         xtp.onreadystatechange = function(e){
+            document.querySelector('#submit_question-btn').classList.remove("disabled");
             if (this.readyState == 4 && this.status == 200) {
                 if(this.responseText==="Success"){
                 document.querySelector(".card-text").innerHTML = this.responseText;
                 document.querySelector("#submit_question").value = null;
                 document.querySelector("#submit_answer").value = null;
                 document.querySelector("#anonymous").checked = false;
+                window.location= "./";
                 }else{
                 document.querySelector(".card-text").innerHTML = this.responseText;
                 document.querySelector(".card-text").classList.add("danger");
