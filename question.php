@@ -83,6 +83,12 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         h1{
             text-align: center;
         }
+         #navtab ul li a strong{
+              color: black;
+         }
+         #navtab ul li a:hover{
+              background-color: lightgreen !important;
+         }
         .navtabbar{
             margin-right: .5%;
         }

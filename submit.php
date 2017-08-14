@@ -49,6 +49,13 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
     .navtabbar{
       margin-right: .5%;
     }
+     #navtab ul li a strong{
+                color: black;
+            }
+
+     #navtab ul li a:hover{
+                background-color: lightgreen !important;
+      }
     .dt-more-container {
             text-align:center;
             margin:2em 0;
