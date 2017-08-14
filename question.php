@@ -120,7 +120,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             </ul>
             <ul class="nav navbar-nav navbar-right navtabbar ">
                 <li >
-                    <a  href="#" class="btn btn-info ">
+                    <a  href="./change_password.php" class="btn btn-info ">
                         <strong><?php echo $_SESSION['name']; ?></strong>
                     </a>
                 </li>
