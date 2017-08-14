@@ -60,7 +60,7 @@ if(!isset($_SESSION['name'])){
         </ul>
         <ul class="nav navbar-nav navbar-right navtabbar ">
           <li >
-            <a  href="#" class="btn btn-info ">
+            <a  href="./change_password.php" class="btn btn-info ">
               <strong><?php echo $_SESSION['name']; ?></strong>
             </a>
           </li>
@@ -122,10 +122,6 @@ if(!isset($_SESSION['name'])){
               <div class="form-group">
                 <label for="year" class="form-control-label">Year</label>
                 <input required="required" autocomplete="off" type="number" min="1926" max="2018" class="form-control" id="year">
-              </div>
-              <div>
-                <label for="anonymous">Anonymous</label>
-                <input type="checkbox" id="anonymous" name="anonymous" value="anonymous">
               </div>
             <button type="submit" class="btn btn-info" id="submit_response_btn">Submit Response</button>
             </form>
