@@ -3,6 +3,25 @@ session_start();
 if(!isset($_SESSION['name'])){
   header("Location:index.php");
 }
+if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])&&isset($_POST['year'])){
+    require('db.php');
+      $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
+      $pdo = new pdo($dsn,$user,$pass);
+      if($_POST['company']==NULL || $_POST['process_type']==NULL || $_POST['tag']==NULL || $_POST['year']==NULL){
+          echo "Please enter all the field";
+          die();
+      }
+      $q = $pdo->prepare("INSERT INTO `group` (`company`, `process_type`, `tag`, `year`) VALUES (?,?,?,?)");
+      $q->bindParam(1,$_POST['company']);
+      $q->bindParam(2,$_POST['process_type']);
+      $q->bindParam(3,$_POST['tag']);
+      $q->bindParam(4,intval($_POST['year']),PDO::PARAM_INT);
+      $q->execute();
+      if ($q->rowCount()){
+          echo "Success";
+      }else echo "Some error occured. (IS the company already listed?) Please try again later.";
+      die();
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +73,7 @@ if(!isset($_SESSION['name'])){
         <ul class="nav navbar-nav navbar-left">
           <li >
             <a class="btn btn-info" id="myButton" data-toggle="modal" data-whatever="@mdo">
-              <strong>Submit your response</strong>
+              <strong>Submit your Group(If not Listed)</strong>
             </a>
           </li>
         </ul>
@@ -201,10 +220,19 @@ if(!isset($_SESSION['name'])){
   document.querySelector("#new_submission").addEventListener('submit', function(e){
     e.preventDefault();
     var xtp = new XMLHttpRequest();
+    xtp.onreadystatechange = function(){
+      if(this.readyState==4 && this.status==200) {
+        console.log(this.responseText);
+        if(this.responseText==="Success"){
+
+        }else{
+          
+        }
+      }
+    };
     xtp.open("POST", "submit.php", true);
     xtp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xtp.send("company="+document.querySelector("#company").value+"&process_type="+document.querySelector("input[name='process_type']").value+"&tag="+document.querySelector("input[name='tag']").value+"&year="+document.querySelector("#year").value);
-    console.log(document.querySelector("#company"));
     
   });
   $(document).ready(function(){

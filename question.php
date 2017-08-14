@@ -38,6 +38,10 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         require('db.php');
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
         $pdo = new pdo($dsn,$user,$pass);
+        if($_POST['question']==NULL || $_POST['answer']==NULL){
+            echo "Please enter all the field";
+            die();
+        }
         $q = $pdo->prepare("INSERT INTO `question`( `group_id`, `question`, `answer`, `user`, `anonymous`) VALUES (:gid,:question,:answer,:user,:anonymous)");
         $q->bindParam(':gid',intval($_POST['gid']),PDO::PARAM_INT);
         $q->bindParam(':question',$_POST['question']);
@@ -145,11 +149,11 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                     <form method="post" action="question.php" id="new_question">
                         <div>
                             <label for="submit_question">Question:</label>
-                            <textarea type="text" id="submit_question" name="submit_question" value="submit_question"></textarea>
+                            <textarea type="text" id="submit_question" name="submit_question" value="submit_question" required="required"></textarea>
                         </div>
                         <div>
                         <label for="submit_answer">Answer:</label>
-                        <textarea type="text" id="submit_answer" name="submit_answer" value="submit_answer"></textarea>
+                        <textarea type="text" id="submit_answer" name="submit_answer" value="submit_answer" required="required"></textarea>
                         </div>
 
                         <div>
@@ -161,7 +165,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                         </div>
                         <div class="card text-white bg-danger mb-3" style="max-width: 100%;">
                             <div class="card-body">
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <p class="card-text"></p>
                              </div>
                          </div>
                         <button type="submit" class="btn btn-info" id="submit_question-btn">Submit question</button>
@@ -374,8 +378,15 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         var xtp = new XMLHttpRequest();
         xtp.onreadystatechange = function(e){
             if (this.readyState == 4 && this.status == 200) {
-                // document.querySelector("#msg").innerHTML = this.responseText;
-                console.log(this.responseText);
+                if(this.responseText==="Success"){
+                document.querySelector(".card-text").innerHTML = this.responseText;
+                document.querySelector("#submit_question").value = null;
+                document.querySelector("#submit_answer").value = null;
+                document.querySelector("#anonymous").checked = false;
+                }else{
+                document.querySelector(".card-text").innerHTML = this.responseText;
+                document.querySelector(".card-text").classList.add("danger");
+                }
             }
         }
         xtp.open("POST","question.php",true);
