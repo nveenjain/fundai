@@ -94,14 +94,14 @@ if(!isset($_SESSION['name'])){
             </button>
           </div>
           <div class="modal-body">
-            <form method="post" action="submit.php" id="new_submission" onsubmit="submit();">
+            <form method="post" action="" id="new_submission" ">
               <div class="form-group">
                 <label for="company" class="form-control-label">company:</label>
-                <input type="text" class="form-control" id="company"/>
+                <input required="required" autocomplete="off" type="text" class="form-control" id="company"/>
               </div>
               <div class="form-group">
                 <label for="process_type" class="form-control-label">Process Type</label>
-                <input list="process_type" name="process_type" class="form-control"/>
+                <input required="required" list="process_type" name="process_type" class="form-control"/>
                 <datalist id="process_type">
                   <option value="Internship">
                   <option value="Placement">
@@ -110,7 +110,7 @@ if(!isset($_SESSION['name'])){
               </div>
               <div class="form-group">
                 <label for="tag" class="form-control-label">Tag</label>
-                <input list="tag" name="tag" class="form-control">
+                <input required="required" list="tag" name="tag" class="form-control">
                 <datalist id="tag">
                   <option value="Coding Round">
                   <option value="Tech internship">
@@ -118,13 +118,10 @@ if(!isset($_SESSION['name'])){
                   <option value="HR ">
                 </datalist>
               </div>
-              <div class="form-group">
-                <label for="description" class="form-control-label">Description</label>
-                <textarea class="form-control" id="description"></textarea>
-              </div>
+              
               <div class="form-group">
                 <label for="year" class="form-control-label">Year</label>
-                <input type="number" min="1926" max="2018" class="form-control" id="year">
+                <input required="required" autocomplete="off" type="number" min="1926" max="2018" class="form-control" id="year">
               </div>
               <div>
                 <label for="anonymous">Anonymous</label>
@@ -171,7 +168,15 @@ if(!isset($_SESSION['name'])){
   <!-- Data table ends here here-->
     <script>
     //open the modal
-  
+  document.querySelector("#new_submission").addEventListener('submit', function(e){
+    e.preventDefault();
+    var xtp = new XMLHttpRequest();
+    xtp.open("POST", "submit.php", true);
+    xtp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xtp.send("company="+document.querySelector("#company").value+"&process_type="+document.querySelector("input[name='process_type']").value+"&tag="+document.querySelector("input[name='tag']").value+"&year="+document.querySelector("#year").value);
+    console.log(document.querySelector("#company"));
+    
+  });
   $(document).ready(function(){
     $("#myButton").click(function(){
         $("#exampleModal").modal("show");

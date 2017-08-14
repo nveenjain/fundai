@@ -67,10 +67,10 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             text-align:center;
             margin:2em 0;
         }
-        .setWidth{
+        #table_question tr td{
             max-width: 100px;
         }
-        .concat div {
+        #table_question tr td {
             overflow: hidden;
             -ms-text-overflow: ellipsis;
             -o-text-overflow: ellipsis;
@@ -287,6 +287,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             $("#show_answer").modal("show");
         });
     });
+    
     //hide question and answer modal
     $(document).ready(function(){
         $("#close_answer").click(function(){
