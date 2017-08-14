@@ -1,8 +1,8 @@
 <?php
 
 $host = 'localhost';
-$db   = 'fundai';//Database Name here
-$user = 'root';//Username here
-$pass = 'naveen';//Password here
+$db   = '';//Database Name here
+$user = '';//Username here
+$pass = '';//Password here
 $charset = 'utf8';
 ?>
