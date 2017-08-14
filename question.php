@@ -34,6 +34,21 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         $json_data = Array($data[0],$data[1],$data[2]);
         echo json_encode($json_data,  JSON_FORCE_OBJECT);
     die();
+}else if(isset($_SESSION['name']) && isset($_POST['question']) && isset($_POST['answer']) && isset($_POST['gid'])){
+        require('db.php');
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
+        $pdo = new pdo($dsn,$user,$pass);
+        $q = $pdo->prepare("INSERT INTO `question`( `group_id`, `question`, `answer`, `user`, `anonymous`) VALUES (:gid,:question,:answer,:user,:anonymous)");
+        $q->bindParam(':gid',intval($_POST['gid']),PDO::PARAM_INT);
+        $q->bindParam(':question',$_POST['question']);
+        $q->bindParam(':answer',$_POST['answer']);
+        $q->bindParam(':user',$_SESSION['name']);
+        $q->bindParam(':anonymous',boolval($_POST['anonymous']),PDO::PARAM_BOOL);
+        $q->execute();
+        if ($q->rowCount()){
+            echo "Success";
+        }else echo "Some error occured. Please try again later.";
+    die();
 }else if(!(isset($_SESSION['name']) && isset($_GET['id']))){
   header("Location:index.php");
 }else{
@@ -138,8 +153,11 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                         </div>
 
                         <div>
-                            <label for="anonyms">Anonyms:</label>
-                            <input type="checkbox" id="anonyms" name="anonyms" value="anonyms">
+                            <label for="anonymous">Anonymous:</label>
+                            <input type="checkbox" id="anonymous" name="anonymous" value="anonymous">
+                        </div>
+                        <div id="msg">
+                            
                         </div>
                         <div class="card text-white bg-danger mb-3" style="max-width: 100%;">
                             <div class="card-body">
@@ -351,6 +369,19 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         )
 
     }
+    document.querySelector('#new_question').addEventListener('submit', function(e){
+        e.preventDefault();
+        var xtp = new XMLHttpRequest();
+        xtp.onreadystatechange = function(e){
+            if (this.readyState == 4 && this.status == 200) {
+                // document.querySelector("#msg").innerHTML = this.responseText;
+                console.log(this.responseText);
+            }
+        }
+        xtp.open("POST","question.php",true);
+        xtp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xtp.send("question="+document.querySelector("#submit_question").value+"&answer="+document.querySelector("#submit_answer").value+"&anonymous="+document.querySelector("#anonymous").checked+"&gid="+<?php echo $_GET['id']; ?>);
+    });
 
 </script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
