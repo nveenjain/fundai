@@ -77,6 +77,9 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>fundai</title>
     <style>
+     body{
+                background-color: #696969;
+            }
         h1{
             text-align: center;
         }
@@ -121,7 +124,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             </ul>
             <ul class="nav navbar-nav navbar-right navtabbar ">
                 <li >
-                    <a  href="#" class="btn btn-info ">
+                    <a  href="./change_password.php" class="btn btn-info ">
                         <strong><?php echo $_SESSION['name']; ?></strong>
                     </a>
                 </li>
