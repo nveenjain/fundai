@@ -92,15 +92,21 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
       </div>
     </div>
   </header>
-  <div>
-    <div class="jumbotron">
-      <div class="page-header">
-        <div class="container"> 
-          <h1>FUNDAI</h1>
-        </div>
-      </div>
-    </div>
-  </div>
+ <section class="spacer green">
+     <div class="container">
+         <div class="row">
+             <div class="span6 aligncenter flyLeft">
+                 <blockquote class="large">
+                    FUNDAI
+                 </blockquote>
+             </div>
+             <div class="span6 aligncenter flyRight">
+                 <i class="icon-coffee icon-10x"></i>
+             </div>
+         </div>
+     </div>
+ </section>
+
   <!-- modal for submit response starts  here-->
   <div class="container">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

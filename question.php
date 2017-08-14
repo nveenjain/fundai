@@ -76,6 +76,9 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>fundai</title>
     <style>
+     body{
+                background-color: #696969;
+            }
         h1{
             text-align: center;
         }
