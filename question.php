@@ -159,6 +159,11 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                         <div id="msg">
                             
                         </div>
+                        <div class="card text-white bg-danger mb-3" style="max-width: 100%;">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                             </div>
+                         </div>
                         <button type="submit" class="btn btn-info" id="submit_question-btn">Submit question</button>
                     </form>
                     <div class="modal-footer">

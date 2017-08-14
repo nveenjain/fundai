@@ -55,6 +55,9 @@ div, article, section, header, footer, nav, li {
 	content:".";
 	visibility:hidden; /* For clearing */
 }
+.navtabbar{
+	margin-right: .5%;
+}
 body {
 	background:#fff;
 	color: #444;
