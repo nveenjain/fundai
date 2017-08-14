@@ -133,6 +133,11 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                             <textarea type="text" id="submit_question" name="submit_question" value="submit_question"></textarea>
                         </div>
                         <div>
+                        <label for="submit_answer">Answer:</label>
+                        <textarea type="text" id="submit_answer" name="submit_answer" value="submit_answer"></textarea>
+                        </div>
+
+                        <div>
                             <label for="anonyms">Anonyms:</label>
                             <input type="checkbox" id="anonyms" name="anonyms" value="anonyms">
                         </div>
@@ -251,7 +256,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                 </ul>
                 <p class="copyright">
                 <div class="credits">
-                    <a href="http://csesociety.in/">CSE Society</a>
+                    <a href="" onclick="newPopup('http://csesociety.in/')" >CSE Society</a>
                 </div>
                     &copy; IIT(ISM) Dhanbad<br>
                     Computer Science & Engineering<br>
