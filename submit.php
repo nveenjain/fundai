@@ -54,7 +54,7 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
             }
 
      #navtab ul li a:hover{
-                background-color: lightgreen !important;
+                background-color: #6A5ACD !important;
       }
     .dt-more-container {
             text-align:center;

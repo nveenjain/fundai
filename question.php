@@ -87,7 +87,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
               color: black;
          }
          #navtab ul li a:hover{
-              background-color: lightgreen !important;
+              background-color: #6A5ACD !important;
          }
         .navtabbar{
             margin-right: .5%;
