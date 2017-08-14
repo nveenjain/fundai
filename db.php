@@ -1,8 +1,8 @@
 <?php
 
 $host = 'localhost';
-$db   = '';//Database Name here
-$user = '';//Username here
-$pass = '';//Password here
+$db   = 'fundai';//Database Name here
+$user = 'root';//Username here
+$pass = 'naveen';//Password here
 $charset = 'utf8';
 ?>
