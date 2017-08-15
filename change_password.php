@@ -53,14 +53,9 @@
         h1{
             text-align: center;
         }
-        #navtab ul li a strong{
-              color: black;
-         }
-         #navtab ul li a:hover{
-              background-color: #6A5ACD !important;
-         }
         body {
             background-color: #A5A5A2;
+            padding-top: 2%;
         }
     </style>
 </head>
@@ -78,7 +73,7 @@
             <ul class="nav navbar-nav navbar-left">
                 <li >
                     <a class="btn btn-info" id="goto_submit" href="submit.php" data-whatever="@mdo">
-                        <strong>Go To Submit Page</strong>
+                        <strong>Home</strong>
                     </a>
                 </li>
             </ul>

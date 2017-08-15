@@ -41,7 +41,7 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
     <title>fundai</title>
     <style >
     body{
-            background-color: #696969;
+            background-color: #A5A5A2;
         }
     h1{
       text-align: center;
@@ -49,13 +49,6 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
     .navtabbar{
       margin-right: .5%;
     }
-     #navtab ul li a strong{
-                color: black;
-            }
-
-     #navtab ul li a:hover{
-                background-color: #6A5ACD !important;
-      }
     .dt-more-container {
             text-align:center;
             margin:2em 0;
@@ -79,8 +72,8 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
       <div class="collapse navbar-collapse" id="navtab">
         <ul class="nav navbar-nav navbar-left">
           <li >
-            <a class="btn btn-info" id="myButton" data-toggle="modal" data-whatever="@mdo">
-              <strong>Submit your Group(If not Listed)</strong>
+            <a class="btn btn-primary" href="submit.php" id="home_btn" data-toggle="" data-whatever="@mdo">
+                                    <strong>Home</strong>
             </a>
           </li>
         </ul>
@@ -192,6 +185,11 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
           <tbody id="tbodydata">
           </tbody>
         </table>
+        <div class="alignright">
+            <a class="btn btn-primary" id="myButton" data-toggle="modal" data-whatever="@mdo">
+              <strong>Submit your Group(If not Listed)</strong>
+            </a>
+        </div>
          <div class="dt-more-container">
             <button id="btn-example-load-more" class="btn btn-info" style="display:none">Load More</button>
         </div>

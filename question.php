@@ -78,17 +78,11 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
     <title>fundai</title>
     <style>
      body{
-                background-color: #696969;
+                background-color: #A5A5A2;
             }
         h1{
             text-align: center;
         }
-         #navtab ul li a strong{
-              color: black;
-         }
-         #navtab ul li a:hover{
-              background-color: #6A5ACD !important;
-         }
         .navtabbar{
             margin-right: .5%;
         }
@@ -123,8 +117,8 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         <div class="collapse navbar-collapse" id="navtab">
             <ul class="nav navbar-nav navbar-left">
                 <li >
-                    <a class="btn btn-info" id="myButton" data-toggle="modal" data-whatever="@mdo">
-                        <strong>Submit your Question</strong>
+                    <a class="btn btn-success" href="./submit.php" id="home_btn" data-toggle="" data-whatever="">
+                       <strong>Home</strong>
                     </a>
                 </li>
             </ul>
@@ -269,6 +263,11 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             
             </tbody>
         </table>
+        <div class="alignright">
+              <a class="btn btn-info" id="myButton" data-toggle="modal" data-whatever="@mdo">
+                <strong>Submit your Question</strong>
+              </a>
+        </div>
         <div class="dt-more-container">
             <button id="btn-example-load-more" class="btn btn-info" style="display:none">Load More</button>
         </div>
@@ -308,7 +307,6 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
     </div>
 </footer>
 <!-- footer ends here-->
-<a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
 <script>
 
     //open submit question modal
