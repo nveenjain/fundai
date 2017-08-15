@@ -5,7 +5,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
     require('db.php');
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";      
     $pdo = new pdo($dsn,$user,$pass);
-    $q = $pdo->prepare("SELECT id,question,answer FROM question WHERE group_id=:gid");
+    $q = $pdo->prepare("SELECT id,question FROM question WHERE group_id=:gid");
         $q->bindParam(':gid',$_GET['gid']);
         $q->execute();
         $json_data = Array();
@@ -13,7 +13,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
         $count=1;
         while($data = $q->fetch()){
             $nr = Array();
-            array_push($nr, $count,$data["question"],$data["answer"]);
+            array_push($nr, $count,$data["question"]);
             array_push($json_data["data"], $nr);
             $count++;
         }
@@ -57,8 +57,10 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
 }else if(!(isset($_SESSION['name']) && isset($_GET['id']))){
   header("Location:index.php");
 }else{
-    
-}
+    if(is_numeric($_GET['id'])) {}
+        else
+            header("Location:index.php");
+    }
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,7 +164,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                             <textarea type="text" id="submit_question" name="submit_question" value="submit_question" required="required"></textarea>
                         </div>
                         <div>
-                        <label for="submit_answer">Answer:</label>
+                        <label for="submit_answer">Description/Answer:</label>
                         <textarea type="text" id="submit_answer" name="submit_answer" value="submit_answer" required="required"></textarea>
                         </div>
 
@@ -261,7 +263,6 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             <tr class="concat">
                 <th class="col-xs-1">Question No.</th>
                 <th class="col-xs-6">Question</th>
-                <th class="col-xs-5">Answer</th>
             </tr>
             </thead>
             
@@ -395,7 +396,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                 document.querySelector("#submit_question").value = null;
                 document.querySelector("#submit_answer").value = null;
                 document.querySelector("#anonymous").checked = false;
-                window.location= "./";
+                location.reload(true);
                 }else{
                 document.querySelector(".card-text").innerHTML = this.responseText;
                 document.querySelector(".card-text").classList.add("danger");

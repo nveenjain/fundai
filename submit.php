@@ -11,6 +11,16 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
           echo "Please enter all the field";
           die();
       }
+      $s = $pdo->prepare("SELECT `id` FROM `group` WHERE `company`=? AND `process_type`=? AND `tag`=? AND `year`=?");
+      $s->bindParam(1,$_POST['company']);
+      $s->bindParam(2,$_POST['process_type']);
+      $s->bindParam(3,$_POST['tag']);
+      $s->bindParam(4,intval($_POST['year']),PDO::PARAM_INT);
+      $s->execute();
+      if($s->rowCount()){
+        echo "Some error occured. (IS the company already listed?) Please try again later.";
+        die();
+      }
       $q = $pdo->prepare("INSERT INTO `group` (`company`, `process_type`, `tag`, `year`) VALUES (?,?,?,?)");
       $q->bindParam(1,$_POST['company']);
       $q->bindParam(2,$_POST['process_type']);
@@ -19,7 +29,7 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
       $q->execute();
       if ($q->rowCount()){
           echo "Success";
-      }else echo "Some error occured. (IS the company already listed?) Please try again later.";
+      }else echo "Some error occured. Please try again later.";
       die();
 }
 ?><!DOCTYPE html>
