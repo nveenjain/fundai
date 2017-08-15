@@ -131,7 +131,7 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
             <ul class="nav navbar-nav navbar-right navtabbar ">
                 <li >
                     <a  href="./change_password.php" class="btn btn-info ">
-                        <strong><?php echo $_SESSION['name']; ?></strong>
+                        <strong>Change Password</strong>
                     </a>
                 </li>
                 <li >
@@ -280,8 +280,9 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
 <!-- Footer start here -->
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="span6 offset3">
+        <div class="row ">
+            <div class="footer-col col-md-6">
+                <h1>Locate Us</h1>
                 <ul class="social-networks">
                     <li><a href="#" onclick="newPopup('https://www.facebook.com/')" title="CSES">
                         <i class="icon-circled icon-bgdark icon-dribbble icon-2x fa fa-fw fa-facebook"></i></a></li>
@@ -289,16 +290,17 @@ if(isset($_SESSION['name']) && isset($_GET['gid'])){
                         <a href="#" onclick="newPopup('http://share.here.com/r/mylocation/e-eyJuYW1lIjoiQ29tcHV0ZXIgU2NpZW5jZSBhbmQgRW5naW5lZXJpbmcgU29jaWV0eSIsImFkZHJlc3MiOiJDb21wdXRlciBTY2llbmNlICYgRW5naW5lZXJpbmcgRGVwYXJ0bWVudCwgSW5kaWFuIFNjaG9vbCBPZiBNaW5lcywgRGhhbmJhZCIsImxhdGl0dWRlIjoyMy44MTUxOCwibG9uZ2l0dWRlIjo4Ni40NDA0OCwicHJvdmlkZXJOYW1lIjoiZmFjZWJvb2siLCJwcm92aWRlcklkIjoxNDUyOTYzMTg0OTY5MjU0fQ==?link=directions&fb_locale=en_US&ref=facebooke')" class="btn-social btn-outline">
                             <i class="icon-circled icon-bgdark icon-twitter icon-2x fa fa-fw fa-map-marker"></i></a>
                     </li>
-
                 </ul>
+            </div>
+            <div class="footer-col col-md-6">
                 <p class="copyright">
                 <div class="credits">
                     <a href="" onclick="newPopup('http://csesociety.in/')" >CSE Society</a>
                 </div>
-                    &copy; IIT(ISM) Dhanbad<br>
-                    Computer Science & Engineering<br>
-                    Technological Avenue<br>
-                    IIT (ISM) ,Dhanbad, Jharkhand 82600
+                &copy; IIT(ISM) Dhanbad<br>
+                Computer Science & Engineering<br>
+                Technological Avenue<br>
+                IIT (ISM) ,Dhanbad, Jharkhand 82600
 
                 </p>
             </div>
