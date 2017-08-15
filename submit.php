@@ -33,7 +33,6 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/default.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -187,7 +186,7 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
         </table>
         <div class="alignright">
             <a class="btn btn-primary" id="myButton" data-toggle="modal" data-whatever="@mdo">
-              <strong>Submit your Group(If not Listed)</strong>
+              Submit  Group(If not Listed)
             </a>
         </div>
          <div class="dt-more-container">

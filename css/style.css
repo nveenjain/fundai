@@ -855,3 +855,10 @@ i.icon-white {
 	}
 
 }
+i.icon-bgdark:hover {
+	background: #26c8aa;
+}
+
+i.icon-bgdark.active {
+	background: #e06d5e;
+}
