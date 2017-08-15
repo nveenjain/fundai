@@ -53,6 +53,12 @@
         h1{
             text-align: center;
         }
+        #navtab ul li a strong{
+              color: black;
+         }
+         #navtab ul li a:hover{
+              background-color: #6A5ACD !important;
+         }
         body {
             background-color: #A5A5A2;
         }
