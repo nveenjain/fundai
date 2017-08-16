@@ -71,7 +71,7 @@ if(isset($_POST['company'])&&isset($_POST['process_type'])&&isset($_POST['tag'])
       <div class="collapse navbar-collapse" id="navtab">
         <ul class="nav navbar-nav navbar-left">
           <li >
-            <a class="btn btn-primary" href="submit.php" id="home_btn" data-toggle="" data-whatever="@mdo">
+            <a class="btn btn-info" href="submit.php" id="home_btn" data-toggle="" data-whatever="@mdo">
                                     <strong>Home</strong>
             </a>
           </li>
